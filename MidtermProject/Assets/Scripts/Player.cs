@@ -1,16 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Rendering;
-using UnityEditor.U2D;
-using UnityEditor.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour { 
     Vector2 vecGravity;
@@ -47,9 +35,6 @@ public class Player : MonoBehaviour {
 
         jump();
         outOfBounds();
-
-        // FOR TESTING PURPOSES
-        test();
     }
     void jump() {
         isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
@@ -108,7 +93,7 @@ public class Player : MonoBehaviour {
     void respawn(){
         this.transform.position = spawnPoint;
     }
-    void test() {
+    void test() { // HOT KEYS FOR TESTING DIFFERENT SCENES IN THE GAME
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneController.Restart();
 
@@ -151,3 +136,18 @@ public class Player : MonoBehaviour {
         }        
     }
 }
+/*
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.Rendering;
+using UnityEditor.U2D;
+using UnityEditor.UI;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+*/

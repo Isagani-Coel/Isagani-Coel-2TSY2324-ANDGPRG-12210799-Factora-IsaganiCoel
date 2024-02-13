@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class UIController : MonoBehaviour {
@@ -17,3 +14,10 @@ public class UIController : MonoBehaviour {
         SceneController.LoadScene(sceneIndex);
     }
 }
+
+/*
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+*/

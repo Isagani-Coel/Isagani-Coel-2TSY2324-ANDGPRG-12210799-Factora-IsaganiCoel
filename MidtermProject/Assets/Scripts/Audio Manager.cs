@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using System;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour {
     public Sounds[] bgm, sfx;
@@ -53,3 +48,13 @@ public class AudioManager : MonoBehaviour {
         }
     }
 }
+
+/*
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using System;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.SceneManagement;
+*/

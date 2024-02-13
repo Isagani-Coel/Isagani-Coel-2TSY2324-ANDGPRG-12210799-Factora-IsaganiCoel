@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class SceneController { 
@@ -16,3 +13,10 @@ public static class SceneController {
         LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
+
+/*
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+*/

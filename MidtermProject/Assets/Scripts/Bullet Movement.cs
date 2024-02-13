@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class BulletMovement : MonoBehaviour {
@@ -10,3 +6,10 @@ public class BulletMovement : MonoBehaviour {
         this.transform.Translate(Vector2.left * speed * Time.deltaTime);
     }
 }
+/*
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEngine;
+*/

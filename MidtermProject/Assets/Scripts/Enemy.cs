@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static BulletMovement;
 
 public class Enemy : MonoBehaviour {
     [Header("Enemy Settings")]
@@ -22,3 +17,12 @@ public class Enemy : MonoBehaviour {
         Destroy(b, bulletDespawnTime);
     }
 }
+
+
+/*
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine; 
+*/
