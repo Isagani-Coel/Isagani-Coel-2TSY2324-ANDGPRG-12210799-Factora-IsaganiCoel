@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,19 +6,31 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	[SerializeField] float moveSpeed;
+    [Header("Player Settings")]
+    public CharacterController controller;
+    public Transform cam;
+    public float speed = 6f;
+    public float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
 
-	// START IS CALLED BEFORE THE FIRST FRAME UPDATE
-	void Start() {
-		moveSpeed = 50f;
-	}
+    void Update() {
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
-	// UPDATE IS CALLED ONCE PER FRAME
-	void Update() {
-		// BASIC MOVEMENT
-        if (Input.GetKey(KeyCode.W)) this.transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-        if (Input.GetKey(KeyCode.A)) this.transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-        if (Input.GetKey(KeyCode.S)) this.transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
-        if (Input.GetKey(KeyCode.D)) this.transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+        Vector3 direction = new Vector3(h, 0f, v).normalized;
+
+        if (direction.magnitude >= 0.1f) {
+            // PLAYER ROTATES WITHT THE GIVEN DIRECTION
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+
+            // ADDING SMOOTHNESS TO THE DIRECTION CHANGE
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+
+            // MAKES THE PLAYER MOVE IN THE GIVEN DIRECTION 
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward; 
+
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        }
     }
 }
