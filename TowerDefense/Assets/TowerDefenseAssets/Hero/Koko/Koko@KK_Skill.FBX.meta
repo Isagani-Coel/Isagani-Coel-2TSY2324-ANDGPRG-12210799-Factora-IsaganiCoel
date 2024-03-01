@@ -1,0 +1,292 @@
+fileFormatVersion: 2
+guid: 1896c51e48ffee942ab36ab1afc22c1a
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Koko
+    100002: //RootNode
+    100004: Koko_Bip001
+    100006: Koko_Bip001 Footsteps
+    100008: Koko_Bip001 Head
+    100010: Koko_Bip001 HeadNub
+    100012: Koko_Bip001 L Calf
+    100014: Koko_Bip001 L Clavicle
+    100016: Koko_Bip001 L Foot
+    100018: Koko_Bip001 L Forearm
+    100020: Koko_Bip001 L Hand
+    100022: Koko_Bip001 L Thigh
+    100024: Koko_Bip001 L Toe0
+    100026: Koko_Bip001 L Toe0Nub
+    100028: Koko_Bip001 L UpperArm
+    100030: Koko_Bip001 Neck
+    100032: Koko_Bip001 Pelvis
+    100034: Koko_Bip001 Ponytail1
+    100036: Koko_Bip001 Ponytail11
+    100038: Koko_Bip001 Ponytail12
+    100040: Koko_Bip001 Ponytail1Nub
+    100042: Koko_Bip001 Prop1
+    100044: Koko_Bip001 R Calf
+    100046: Koko_Bip001 R Clavicle
+    100048: Koko_Bip001 R Foot
+    100050: Koko_Bip001 R Forearm
+    100052: Koko_Bip001 R Hand
+    100054: Koko_Bip001 R Thigh
+    100056: Koko_Bip001 R Toe0
+    100058: Koko_Bip001 R Toe0Nub
+    100060: Koko_Bip001 R UpperArm
+    100062: Koko_Bip001 Spine
+    100064: Koko_Bip001 Spine1
+    100066: Koko_weapon
+    100068: Point001
+    100070: Point002
+    100072: Point003
+    100074: Point004
+    400000: Koko
+    400002: //RootNode
+    400004: Koko_Bip001
+    400006: Koko_Bip001 Footsteps
+    400008: Koko_Bip001 Head
+    400010: Koko_Bip001 HeadNub
+    400012: Koko_Bip001 L Calf
+    400014: Koko_Bip001 L Clavicle
+    400016: Koko_Bip001 L Foot
+    400018: Koko_Bip001 L Forearm
+    400020: Koko_Bip001 L Hand
+    400022: Koko_Bip001 L Thigh
+    400024: Koko_Bip001 L Toe0
+    400026: Koko_Bip001 L Toe0Nub
+    400028: Koko_Bip001 L UpperArm
+    400030: Koko_Bip001 Neck
+    400032: Koko_Bip001 Pelvis
+    400034: Koko_Bip001 Ponytail1
+    400036: Koko_Bip001 Ponytail11
+    400038: Koko_Bip001 Ponytail12
+    400040: Koko_Bip001 Ponytail1Nub
+    400042: Koko_Bip001 Prop1
+    400044: Koko_Bip001 R Calf
+    400046: Koko_Bip001 R Clavicle
+    400048: Koko_Bip001 R Foot
+    400050: Koko_Bip001 R Forearm
+    400052: Koko_Bip001 R Hand
+    400054: Koko_Bip001 R Thigh
+    400056: Koko_Bip001 R Toe0
+    400058: Koko_Bip001 R Toe0Nub
+    400060: Koko_Bip001 R UpperArm
+    400062: Koko_Bip001 Spine
+    400064: Koko_Bip001 Spine1
+    400066: Koko_weapon
+    400068: Point001
+    400070: Point002
+    400072: Point003
+    400074: Point004
+    4300000: Koko
+    4300002: Koko_weapon
+    7400000: KK_Skill
+    11100000: //RootNode
+    13700000: Koko
+    13700002: Koko_weapon
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 3
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 1
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: KK_Skill
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0
+        functionName: StartEffect
+        data: SD_skill_effect_G
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .920844376
+        functionName: StopEffect
+        data: SD_skill_effect_G
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .50131923
+        functionName: AreaAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Koko
+        weight: 1
+      - path: Koko_Bip001
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Footsteps
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 L Thigh
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 L Thigh/Koko_Bip001
+          L Calf
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 L Thigh/Koko_Bip001
+          L Calf/Koko_Bip001 L Foot
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 L Thigh/Koko_Bip001
+          L Calf/Koko_Bip001 L Foot/Koko_Bip001 L Toe0
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 L Thigh/Koko_Bip001
+          L Calf/Koko_Bip001 L Foot/Koko_Bip001 L Toe0/Koko_Bip001 L Toe0Nub
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 R Thigh
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 R Thigh/Koko_Bip001
+          R Calf
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 R Thigh/Koko_Bip001
+          R Calf/Koko_Bip001 R Foot
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 R Thigh/Koko_Bip001
+          R Calf/Koko_Bip001 R Foot/Koko_Bip001 R Toe0
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 R Thigh/Koko_Bip001
+          R Calf/Koko_Bip001 R Foot/Koko_Bip001 R Toe0/Koko_Bip001 R Toe0Nub
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 Head
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 Head/Koko_Bip001 HeadNub
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 Head/Koko_Bip001 Ponytail1
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 Head/Koko_Bip001 Ponytail1/Koko_Bip001 Ponytail11
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 Head/Koko_Bip001 Ponytail1/Koko_Bip001 Ponytail11/Koko_Bip001
+          Ponytail12
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 Head/Koko_Bip001 Ponytail1/Koko_Bip001 Ponytail11/Koko_Bip001
+          Ponytail12/Koko_Bip001 Ponytail1Nub
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 L Clavicle
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 L Clavicle/Koko_Bip001 L UpperArm
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 L Clavicle/Koko_Bip001 L UpperArm/Koko_Bip001 L Forearm
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 L Clavicle/Koko_Bip001 L UpperArm/Koko_Bip001 L Forearm/Koko_Bip001
+          L Hand
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 R Clavicle
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 R Clavicle/Koko_Bip001 R UpperArm
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 R Clavicle/Koko_Bip001 R UpperArm/Koko_Bip001 R Forearm
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Pelvis/Koko_Bip001 Spine/Koko_Bip001 Spine1/Koko_Bip001
+          Neck/Koko_Bip001 R Clavicle/Koko_Bip001 R UpperArm/Koko_Bip001 R Forearm/Koko_Bip001
+          R Hand
+        weight: 1
+      - path: Koko_Bip001/Koko_Bip001 Prop1
+        weight: 1
+      - path: Koko_weapon
+        weight: 1
+      - path: Point001
+        weight: 1
+      - path: Point002
+        weight: 1
+      - path: Point003
+        weight: 1
+      - path: Point004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: Koko
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 13719d1102a1cb2488126d520b60795f,
+    type: 3}
+  animationType: 2
+  additionalBone: 0
+  userData: 
