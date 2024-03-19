@@ -1,11 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public enum SpawnState { SPAWNING, WAITING, COUNTING, FINISHED };
 
@@ -13,10 +8,10 @@ public class WaveManager : MonoBehaviour {
     public static WaveManager instance;
 
     [Header("Wave Settings")]
+    [SerializeField] SpawnState state = SpawnState.COUNTING;
     [SerializeField] Wave[] waves;
     [SerializeField] TextMeshProUGUI waveCountdownText;
     [SerializeField] float waveInterval = 5f, waveCountdown;
-    [SerializeField] SpawnState state = SpawnState.COUNTING;
     float searchInterval = 1f, searchCountdown;
 
     public SpawnState GetState() { return state; }
@@ -35,7 +30,7 @@ public class WaveManager : MonoBehaviour {
     }
 
     void Update() {
-        if (state == SpawnState.FINISHED) return;
+        if (state == SpawnState.FINISHED || BuildManager.instance.GetPlacedTowers().Count == 0) return;
 
         // CHECKS IF THE ENEMIES FROM THE CURRENT ARE STILL ALIVE
         if (state == SpawnState.WAITING) {

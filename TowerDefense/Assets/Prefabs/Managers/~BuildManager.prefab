@@ -44,33 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfbea231eb9125499a96881d90f622c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towers:
-  - towerName: Arrow Tower
-    towerMat: {fileID: 2100000, guid: 1d2973fc35558e8429f8aebc0b06bafb, type: 2}
-    towerLevelPrefabs:
-    - {fileID: 459509056005247686, guid: 7f6f0078b7eb2384fb2a496df427e881, type: 3}
-    buildCost: 30
-    upgradeCost: 0
-  - towerName: Fire Tower
-    towerMat: {fileID: 2100000, guid: 2e3f0592523a7a4458e19f0025fce837, type: 2}
-    towerLevelPrefabs:
-    - {fileID: 4872517615708873759, guid: ab13cc915d660ca47853d0377913196f, type: 3}
-    buildCost: 50
-    upgradeCost: 0
-  - towerName: Ice Tower
-    towerMat: {fileID: 2100000, guid: a1a88b2e847a72a498a5115a42f4de87, type: 2}
-    towerLevelPrefabs:
-    - {fileID: 929366079464075159, guid: a196fe525bc511a45a4e3b5a1921cb41, type: 3}
-    buildCost: 50
-    upgradeCost: 0
-  - towerName: Cannon
-    towerMat: {fileID: 2100000, guid: bbb4051decb9e9948a72ba2d33fc5949, type: 2}
-    towerLevelPrefabs:
-    - {fileID: 8541707835918947621, guid: fe2748c4c716460488bda4fb0189ccc5, type: 3}
-    buildCost: 80
-    upgradeCost: 0
   towerPrefabs:
   - {fileID: 459509056005247686, guid: 7f6f0078b7eb2384fb2a496df427e881, type: 3}
   - {fileID: 4872517615708873759, guid: ab13cc915d660ca47853d0377913196f, type: 3}
   - {fileID: 929366079464075159, guid: a196fe525bc511a45a4e3b5a1921cb41, type: 3}
   - {fileID: 8541707835918947621, guid: fe2748c4c716460488bda4fb0189ccc5, type: 3}
+  selectionMat: {fileID: 2100000, guid: e595aac018f574d4b87b2b11c569bb97, type: 2}

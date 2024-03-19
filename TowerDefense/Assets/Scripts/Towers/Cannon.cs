@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cannon : Tower {
-    protected override void Start() { base.Start(); }
+    protected override void Start() {
+        name = "Cannon";
+        upgradeCosts = new int[] { 80, 50, 60, 70 };
+        dmg = 20;
+        range = 9f;
+        attackRate = 0.8f;
+
+        base.Start();
+    }
     protected override void Update() {
         if (target == null) return;
 
-        if (state == TowerState.PLACED) {
-            towerMat.color = Color.white;
-            LockInAtTarget();
-        }
-
-        // THE CANNON WILL ONLY TARGET GROUND ENEMIES
+        // THE CANNON CAN ONLY TARGET GROUND ENEMIES
         if (target.GetComponent<Enemy>().GetMonsterType() != MonsterType.AIR) LockInAtTarget();
 
         if (attackCountdown <= 0f) {
@@ -20,18 +21,24 @@ public class Cannon : Tower {
             attackCountdown = 1f / attackRate;
         }
         else attackCountdown -= Time.deltaTime;
-
     }
-    protected override void Attack() {
-        GameObject bulletClone = Instantiate(bulletPrefab, nozzle.transform.position, nozzle.transform.rotation);
-        Bullet b = bulletClone.GetComponent<Bullet>();
 
-        // THE CANNON WILL ONLY TARGET GROUND ENEMIES
+    protected override void Attack() {
+        CreateBullet();
+
+        // THE CANNON CAN ONLY TARGET GROUND ENEMIES
         if (target.GetComponent<Enemy>().GetMonsterType() == MonsterType.AIR) return;
 
-        if (b != null) {
-            b.SetTarget(target);
-            b.SetType(BulletType.CANNONBALL);
+        if (tempBullet != null) {
+            tempBullet.SetTower(this);
+            tempBullet.SetTarget(target);
+            tempBullet.SetType(BulletType.CANNONBALL);
         }
     }
+
+
+    protected override void OnDrawGizmosSelected() { base.OnDrawGizmosSelected(); }
+    protected override void OnDestroy() { base.OnDestroy(); }
+    protected override void OnMouseEnter() { base.OnMouseEnter(); }
+    protected override void OnMouseExit() { base.OnMouseExit(); }
 }

@@ -1,27 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-/* -NOTES- (03.07.24)
-    -FEATURES-
-    1. Shop System so you can upgrade/sell towers
-    2. Upgrade paths
-    3. Shop UI
-    4. Anything Upgrades-related
+/// -MILESTONE 3 DUE DATE- (03.15.24)
+/// -FINAL BUILD DUE DATE- (03.22.24)
+/// -END DATE FOR EVERYTHING- (03.27.24)
 
-    -TOWER FEATUERS-
-    Arrow Tower: 1) Short range high dps 2) long range low dps
-    Cannon: Can upgrade to a double cannon  
+/* -IMPORTANT- (03.18.24)
+    1. add UI for the different upgrade paths
+    2. add a confirmation button when upgrade/selling a tower
 
-   -BUGS- (03.03.24)
-    1. When you create a new arrow tower, all previous towers share the same color
-    2. The towre can already attack before buying it.
-
-    -MILESTONE 2 DUE DATE- (03.08.24)
- */
+    -TOWER UPGRADE FEATURES-
+        1. Increased Range
+        2. Increaed Damage
+*/
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
@@ -46,24 +37,20 @@ public class GameManager : MonoBehaviour {
         }
         else Destroy(gameObject);
     }
-
     void Start() {
         lifeText.text = "Life: " + HP;
         goldText.text = "Gold: " + gold;
-        waveText.text = "Wave " + waveCount;
+        waveText.text = "Wave " + waveCount + "/6";
     }
-
     void Update() {
-        // testing();
+        testing();
         if (!isAlive) return;
 
         lifeText.text = "Life: " + HP;
         goldText.text = "Gold: " + gold;
-        waveText.text = "Wave " + (waveCount + 1).ToString();
+        waveText.text = "Wave " + (waveCount + 1).ToString() + "/6";
 
-        TogglePause();
-
-        if (WaveManager.instance.GetState() == SpawnState.FINISHED) Debug.Log("ALL WAVES HAVE BEEN CLEARED");
+        // if (WaveManager.instance.GetState() == SpawnState.FINISHED) Debug.Log("ALL WAVES HAVE BEEN CLEARED");
     }
 
     public void EarnGold(int amt) { 
@@ -95,7 +82,6 @@ public class GameManager : MonoBehaviour {
             Time.timeScale = 2f;
         }
     }
-
     void testing() {
         if (Input.GetKeyDown(KeyCode.UpArrow)) EarnGold(10);
         if (Input.GetKeyDown(KeyCode.DownArrow)) EarnGold(-10);
@@ -107,20 +93,6 @@ public class GameManager : MonoBehaviour {
             isPaused = false;
             Time.timeScale = 2f;
         }
-
-        /*
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (Time.timeScale != 0f) Time.timeScale = 1f;
-            if (Time.timeScale != 1f) Time.timeScale = 0f;
-        } // */
-
         TogglePause();
-
-        // RESTART
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        if (Input.GetKeyDown(KeyCode.Return)) SpawnManager.instance.Spawn(3);
-        if (Input.GetKeyDown(KeyCode.Backspace)) SpawnManager.instance.Spawn(0);
     }
 }

@@ -1,26 +1,34 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Runtime.CompilerServices;
-using UnityEditor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 public class BuildManager : MonoBehaviour {
     public static BuildManager instance;
 
     [Header("Build Settings")]
-    [SerializeField] Towers[] towers; // will be used later on once there are different ugrades for the towers
     [SerializeField] GameObject[] towerPrefabs;
-    GameObject draggableTower; // temporary until the player has selected a spot for the tower
-    Tower tempTower;
-    float buildableOffsetY = 2.2f;
-    int choice = 0;
+    [SerializeField] Material selectionMat;
 
-    // MOVING THE TOWER ON THE MAP
+    [Header("Tower UI")]
+    [SerializeField] GameObject towerInfoUI;
+    [SerializeField] TextMeshProUGUI towerInfo;
+
+    [Header("Towers On Field")]
+    [SerializeField] List<GameObject> placedTowers = new List<GameObject>();
+   
+    // TOWER SELECTION & DRAGGING
+    GameObject draggableTower, selectedTower;
+
     Ray ray; // shoots a line from your origin to the end point of your trajectory
-    RaycastHit hit; // the object that is being hit
+    RaycastHit hit; // the GameObject that is being hit
+
+    int towerChoice = 0;
+    int[] buildCosts = { 30, 50, 50, 80 };
+    const float buildableOffsetY = 2.1f;
+
+    public List<GameObject> GetPlacedTowers() { return placedTowers; }
+    public GameObject GetSelectedTower() { return selectedTower; }
 
     void Awake() {
         if (instance == null) {
@@ -29,62 +37,93 @@ public class BuildManager : MonoBehaviour {
         }
         else Destroy(gameObject);
     }
-    
     void Update() {
-        if (draggableTower == null) return;
-
+        if (draggableTower == null) {
+            SelectTower();
+            return;
+        }
         MoveTower();
     }
 
     public void CreateTower(int i) {
-        if (towers[i].buildCost > GameManager.instance.GetGold()) { 
-            Debug.LogWarning("YOU DON'T HAVE ENOUGH GOLD");
+        if (buildCosts[i] > GameManager.instance.GetGold()) { 
+            Debug.LogError("YOU DON'T HAVE ENOUGH GOLD TO BUY THIS TOWER");
             return;
         }
 
-        GameObject t = (GameObject)Instantiate(towerPrefabs[i]);;
-        draggableTower = t;
-        tempTower = t.GetComponent<Tower>();
-        choice = i; 
+        GameObject towerClone = (GameObject)Instantiate(towerPrefabs[i]);
+        draggableTower = towerClone;
+        towerChoice = i; 
     }
-
     void MoveTower() {
+        selectedTower = null;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit)) {
-            draggableTower.transform.position = SnapToGrid(hit.point);
+        if (!Physics.Raycast(ray, out hit)) return;
 
-            if (hit.point.y > buildableOffsetY) {
-                tempTower.Buildable();
+        draggableTower.transform.position = SnapToGrid(hit.point);
+        Tower t = draggableTower.GetComponent<Tower>();
 
-                if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
-                    GameManager.instance.EarnGold(-towers[choice].buildCost);
-                    tempTower.Build();
-                    draggableTower = null;
-                    tempTower = null;
-                }
-            }
-            else {
-                tempTower.Unbuildable();
+        if (hit.point.y > buildableOffsetY) {
+            draggableTower.GetComponent<Tower>().Buildable();
 
-                if (Input.GetMouseButtonDown(0))
-                    Debug.LogError("YOU CAN'T PLACE THAT TOWER THERE");
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
+                GameManager.instance.EarnGold(-buildCosts[towerChoice]);
+                t.Build();
+                placedTowers.Add(draggableTower);
+                // Debug.Log(t.name + " HAS BEEN BUILT!");
+                draggableTower = null;
             }
         }
-        Vector3 SnapToGrid(Vector3 towerPos) { 
+        else {
+            t.Unbuildable();
+
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+                Debug.LogError("YOU CAN'T PLACE THAT TOWER THERE");
+        }
+        
+        Vector3 SnapToGrid(Vector3 towerPos) {
             return new Vector3(Mathf.Round(towerPos.x), towerPos.y, Mathf.Round(towerPos.z));
         }
     }
-}
+    void SelectTower() {
+        draggableTower = null;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-[System.Serializable]
-public class Towers {
-    public string towerName;
-    public Material towerMat;
-    public GameObject[] towerLevelPrefabs;
-    public int buildCost, upgradeCost;
-}
+        if (!Physics.Raycast(ray, out hit)) return;
 
-/*
-using UnityEditor.Experimental.GraphView;
- */
+        if (hit.collider.gameObject.CompareTag("Tower") && Input.GetMouseButtonDown(0)) {
+            GameObject tempTow = hit.collider.gameObject;
+
+            selectedTower = tempTow;
+            Tower t = selectedTower.GetComponent<Tower>();
+            towerInfoUI.SetActive(true);
+            towerInfo.text = t.name + " (Level " + t.GetLevel() + ")";
+        }
+    }
+    public void UpgradeTower(GameObject tower, Stat stat) {
+        Tower t = tower.GetComponent<Tower>();
+
+        if (GameManager.instance.GetGold() < t.GetUpgradeCosts(t.GetLevel() - 1)) {
+            Debug.LogError("YOU DON'T HAVE ENOUGH GOLD TO UPGRADE THIS TOWER!");
+            return;
+        }
+        if (t.GetIsMaxed()) {
+            Debug.LogError("THIS TOWER IS ALREADY AT ITS MAXIMUM LEVEL!");
+            return;
+        }
+
+        t.Upgrade(stat);
+        GameManager.instance.EarnGold(-t.GetUpgradeCosts(t.GetLevel() - 1));
+        UIHandler.canPause = true;
+        // Debug.Log(t.name + " HAS BEEN UPGRADED!");
+    }
+    public void SellTower(GameObject tower) {
+        Tower t = tower.GetComponent<Tower>();
+
+        // Debug.LogWarning(t.name + " HAS BEEN SOLD!");
+        UIHandler.canPause = true;
+        placedTowers.Remove(tower);
+        Destroy(tower);
+    }
+}
