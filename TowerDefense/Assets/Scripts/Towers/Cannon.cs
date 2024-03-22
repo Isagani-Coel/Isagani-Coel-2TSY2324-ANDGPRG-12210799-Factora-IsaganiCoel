@@ -41,4 +41,6 @@ public class Cannon : Tower {
     protected override void OnDestroy() { base.OnDestroy(); }
     protected override void OnMouseEnter() { base.OnMouseEnter(); }
     protected override void OnMouseExit() { base.OnMouseExit(); }
+    protected override void OnTriggerEnter(Collider other) { base.OnTriggerEnter(other); }
+    protected override void OnTriggerExit(Collider other) { base.OnTriggerExit(other); }
 }

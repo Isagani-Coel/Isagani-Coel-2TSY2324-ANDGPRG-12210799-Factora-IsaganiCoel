@@ -53,7 +53,6 @@ public class WaveManager : MonoBehaviour {
 
         waveCountdown -= Time.deltaTime;
         waveCountdown = Mathf.Clamp(waveCountdown, 0f, Mathf.Infinity);
-        // waveCountdownText.text = string.Format("{0:00.00}", waveCountdown);
     }
 
     IEnumerator StartWave(Wave wave) {

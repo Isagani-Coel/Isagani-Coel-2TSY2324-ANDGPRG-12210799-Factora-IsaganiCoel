@@ -1,5 +1,4 @@
-using JetBrains.Annotations;
-using System.Security.Cryptography;
+using System.Transactions;
 using UnityEngine;
 
 public enum TowerState { START, PLACED, SELECTED };
@@ -24,10 +23,10 @@ public abstract class Tower : MonoBehaviour {
     protected const int MAX_LEVEL = 4;
     protected int[] upgradeCosts;
     protected int sellValue = 0;
-    public bool isMaxed = false;
     protected int level = 1; // counter for each tower level
     protected int towerValue = 0; // used when you're planning to sell the tower
     protected int towerIndex = 0; // the different looks for each tower
+    protected bool isMaxed, isColliding;
 
     // BASE TOWER STATS
     protected const float turnSpeed = 20f;
@@ -38,17 +37,20 @@ public abstract class Tower : MonoBehaviour {
     protected float range, attackRate, effectCountdown;
 
 
-    public float GetEffectCountdown() { return effectCountdown; }
     public int GetTowerValue() { return sellValue; }
     public int GetDMG() { return dmg; }
     public int GetUpgradeCosts(int i) { return upgradeCosts[i]; }
     public int GetLevel() { return level; }
     public int GetMaxLevel() { return MAX_LEVEL; }
     public bool GetIsMaxed() { return isMaxed; }
+    public bool GetIsColliding() { return isColliding; }
+    public float GetEffectCountdown() { return effectCountdown; }
     public GameObject GetPlane() { return plane; }
 
 
     protected virtual void Start() {
+        isMaxed = false;
+        isColliding = false;
         sellValue += upgradeCosts[0] / 2;
         InvokeRepeating("Retarget", 0f, 2f);
     }
@@ -182,6 +184,8 @@ public abstract class Tower : MonoBehaviour {
     }
     protected virtual void OnMouseEnter() { Selected(); }
     protected virtual void OnMouseExit() { Deselected(); }
+    protected virtual void OnTriggerEnter(Collider other) { if (other.CompareTag("Environment")) isColliding = true; }
+    protected virtual void OnTriggerExit(Collider other) { if (other.CompareTag("Environment")) isColliding = false; }
 
     protected virtual void testing() {
         /*

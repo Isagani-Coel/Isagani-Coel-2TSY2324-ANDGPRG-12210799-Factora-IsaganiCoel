@@ -83,6 +83,7 @@ public class Enemy : MonoBehaviour {
     void OnDestroy() {
         if (isAlive) GameManager.instance.LooseHP();
         else {
+            // AudioManager.instance.PlaySound("Goblin Death");
             switch (monsterTier) {
                 case MonsterTier.NORMAL: GameManager.instance.EarnGold(10); break;
                 case MonsterTier.BOSS: GameManager.instance.EarnGold(50); break;

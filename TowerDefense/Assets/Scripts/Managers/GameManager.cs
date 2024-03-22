@@ -1,17 +1,20 @@
 using TMPro;
 using UnityEngine;
 
-/// -MILESTONE 3 DUE DATE- (03.15.24)
 /// -FINAL BUILD DUE DATE- (03.22.24)
 /// -END DATE FOR EVERYTHING- (03.27.24)
 
-/* -IMPORTANT- (03.18.24)
-    1. add UI for the different upgrade paths
-    2. add a confirmation button when upgrade/selling a tower
+/* -IMPORTANT- (03.20.24) 23:57
+    - Implement the sounds to the game
+    - Get sounds for Crystal Core
+    - Add a main menu & game over UI
+    - Fix restart button
+    - set additional colliders so the tower can't be stacked on top of one another
 
-    -TOWER UPGRADE FEATURES-
-        1. Increased Range
-        2. Increaed Damage
+    -ADDITIONAL FEATURES LATER ON-
+    -  Add decorations to the map
+    - Make the towers have small movement if they don't have a target (random rotation)
+    - restart the game (make it harder) once all waves have been cleared
 */
 
 public class GameManager : MonoBehaviour {
@@ -83,16 +86,7 @@ public class GameManager : MonoBehaviour {
         }
     }
     void testing() {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) EarnGold(10);
+        if (Input.GetKeyDown(KeyCode.UpArrow)) EarnGold(50);
         if (Input.GetKeyDown(KeyCode.DownArrow)) EarnGold(-10);
-
-        if (Input.GetKeyDown(KeyCode.Return)) LooseHP();
-        // Debug.Log("Wave " + (waveCount + 1).ToString());
-
-        if (Input.GetKeyDown(KeyCode.L)) {
-            isPaused = false;
-            Time.timeScale = 2f;
-        }
-        TogglePause();
     }
 }

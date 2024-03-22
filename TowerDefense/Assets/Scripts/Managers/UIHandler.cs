@@ -1,18 +1,26 @@
 using TMPro;
 using UnityEngine;
 
-[System.Serializable]
 public enum Stat { START, DMG, RANGE, DPS };
 
 public class UIHandler : MonoBehaviour {
-    public static bool isPaused, canPause, is2xSpeed, isSelling, isUpgrading;
+    public static UIHandler instance;
 
     [Header("UI Panels")]
     [SerializeField] TextMeshProUGUI confirmationText;
     [SerializeField] GameObject pausePanel, sidebarPanel, upgradePanel, confirmPanel, statPanel;
 
+    public static bool canPause;
+    bool isPaused, is2xSpeed, isSelling, isUpgrading;
     Stat chosenStat;
 
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
+    }
     void Start() {
         isPaused = false;
         canPause = true;
@@ -45,11 +53,22 @@ public class UIHandler : MonoBehaviour {
     }
     public void Cancel() {
         canPause = true;
+        isSelling = false;
+        isUpgrading = false;
+        
         upgradePanel.SetActive(false);
         confirmPanel.SetActive(false);
         statPanel.SetActive(false);
     }
     public void EnableUpgrade() {
+        Tower t = BuildManager.instance.GetSelectedTower().GetComponent<Tower>();
+
+        if (GameManager.instance.GetGold() < t.GetUpgradeCosts(t.GetLevel())) {
+            Debug.LogError("YOU DON'T HAVE ENOUGH GOLD TO UPGRADE THIS TOWER!");
+            Cancel();
+            return;
+        }
+
         canPause = false;
         isUpgrading = true;
         upgradePanel.SetActive(false);
@@ -63,18 +82,10 @@ public class UIHandler : MonoBehaviour {
     }
 
     public void ConfirmAction() {
-        if (isSelling) {
-            confirmationText.text = "Confirm sell?";
-            BuildManager.instance.SellTower(BuildManager.instance.GetSelectedTower());
-            confirmPanel.SetActive(false);
-        }
-        
-        if (isUpgrading) {
-            confirmationText.text = "Confirm upgrade?";
-            BuildManager.instance.UpgradeTower(BuildManager.instance.GetSelectedTower(), chosenStat);
-            confirmPanel.SetActive(false);
-        }
+        if (isSelling) BuildManager.instance.SellTower(BuildManager.instance.GetSelectedTower());
+        if (isUpgrading) BuildManager.instance.UpgradeTower(BuildManager.instance.GetSelectedTower(), chosenStat);
 
+        confirmPanel.SetActive(false);
         isSelling = false;
         isUpgrading = false;
         chosenStat = Stat.START;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,7 +26,6 @@ public class BuildManager : MonoBehaviour {
 
     int towerChoice = 0;
     int[] buildCosts = { 30, 50, 50, 80 };
-    const float buildableOffsetY = 2.1f;
 
     public List<GameObject> GetPlacedTowers() { return placedTowers; }
     public GameObject GetSelectedTower() { return selectedTower; }
@@ -38,6 +38,8 @@ public class BuildManager : MonoBehaviour {
         else Destroy(gameObject);
     }
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) SoundManager.instance.PlaySound("Select", 0);
+
         if (draggableTower == null) {
             SelectTower();
             return;
@@ -64,14 +66,13 @@ public class BuildManager : MonoBehaviour {
         draggableTower.transform.position = SnapToGrid(hit.point);
         Tower t = draggableTower.GetComponent<Tower>();
 
-        if (hit.point.y > buildableOffsetY) {
+        if (hit.point.y > 2.1f && hit.point.y < 2.3f && !t.GetIsColliding()) {
             draggableTower.GetComponent<Tower>().Buildable();
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
                 GameManager.instance.EarnGold(-buildCosts[towerChoice]);
                 t.Build();
                 placedTowers.Add(draggableTower);
-                // Debug.Log(t.name + " HAS BEEN BUILT!");
                 draggableTower = null;
             }
         }
@@ -121,8 +122,8 @@ public class BuildManager : MonoBehaviour {
     public void SellTower(GameObject tower) {
         Tower t = tower.GetComponent<Tower>();
 
-        // Debug.LogWarning(t.name + " HAS BEEN SOLD!");
         UIHandler.canPause = true;
+        GameManager.instance.EarnGold(t.GetTowerValue());
         placedTowers.Remove(tower);
         Destroy(tower);
     }
