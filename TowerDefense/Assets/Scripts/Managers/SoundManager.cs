@@ -1,11 +1,10 @@
-using UnityEngine.Audio;
 using UnityEngine;
 using System;
 
 public class SoundManager : MonoBehaviour {
     public static SoundManager instance;
 
-    [SerializeField] Sound[] misc, enemies, towers;
+    [SerializeField] Sound[] misc, enemies, towers, bgm;
     [SerializeField] AudioSource soundSource;
 
     void Awake() {
@@ -15,14 +14,15 @@ public class SoundManager : MonoBehaviour {
         }
         else Destroy(gameObject);
     }
-
-    public void PlaySound(string name, int mode) {
+    void Start() { Play("Theme", 3); }
+    public void Play(string name, int mode) {
         Sound s = null;
 
         switch (mode) {
             case 0: s = Array.Find(misc, i => i.name == name); break;
             case 1: s = Array.Find(enemies, i => i.name == name); break;
             case 2: s = Array.Find(towers, i => i.name == name); break;
+            case 3: s = Array.Find(bgm, i => i.name == name); break;
         }
 
         if (s != null) {

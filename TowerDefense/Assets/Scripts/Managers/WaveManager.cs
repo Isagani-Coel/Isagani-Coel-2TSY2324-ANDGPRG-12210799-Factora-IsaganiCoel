@@ -23,14 +23,12 @@ public class WaveManager : MonoBehaviour {
         }
         else Destroy(gameObject);
     }
-
     void Start() {
         waveCountdown = waveInterval;
         searchCountdown = searchInterval;
     }
-
     void Update() {
-        if (state == SpawnState.FINISHED || BuildManager.instance.GetPlacedTowers().Count == 0) return;
+        if (state == SpawnState.FINISHED || BuildManager.instance.GetPlacedTowers().Count == 0 || !GameManager.instance.GetIsAlive()) return;
 
         // CHECKS IF THE ENEMIES FROM THE CURRENT ARE STILL ALIVE
         if (state == SpawnState.WAITING) {
@@ -59,17 +57,19 @@ public class WaveManager : MonoBehaviour {
         state = SpawnState.SPAWNING;
 
         for (int i = 0; i < wave.enemyCount; i++) {
-            // SPAWNS THE DIFERENT BOSSES
+            // BOSS
             if (i == wave.enemyCount - 1) {
-                if (GameManager.waveCount == 2) SpawnManager.instance.Spawn(0);
-                if (GameManager.waveCount == 5) SpawnManager.instance.Spawn(3);
+                if (GameManager.waveCount == 2) SpawnManager.instance.Spawn(0); // hog
+                if (GameManager.waveCount == 5) SpawnManager.instance.Spawn(3); // dragon
             }
 
-            // SPAWNS NORMAL ENEMIES
+            // NORMAL ENEMY
             if (GameManager.waveCount < 3) SpawnManager.instance.Spawn(1);
-            else SpawnManager.instance.Spawn(Random.Range(1, 3));
+            else {
+                if (Random.Range(0, 2) < 0.3) SpawnManager.instance.Spawn(2);
+                else SpawnManager.instance.Spawn(1);
+            }
 
-            // TAKES A SHORT BREAK AFTER EACH ITERATION
             yield return new WaitForSeconds(1f / wave.spawnRate);
         }
 
@@ -91,10 +91,12 @@ public class WaveManager : MonoBehaviour {
         waveCountdown = waveInterval;
 
         if (GameManager.waveCount == waves.Length - 1) {
+            SoundManager.instance.Play("Win", 0);
             state = SpawnState.FINISHED;
             return;
         }
 
+        SoundManager.instance.Play("Wave Done", 0);
         GameManager.waveCount++;
     }
 }

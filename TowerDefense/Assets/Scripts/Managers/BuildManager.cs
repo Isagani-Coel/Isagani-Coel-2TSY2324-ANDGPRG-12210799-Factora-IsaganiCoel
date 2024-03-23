@@ -38,19 +38,28 @@ public class BuildManager : MonoBehaviour {
         else Destroy(gameObject);
     }
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) SoundManager.instance.PlaySound("Select", 0);
-
         if (draggableTower == null) {
             SelectTower();
             return;
         }
         MoveTower();
     }
-
+    
     public void CreateTower(int i) {
-        if (buildCosts[i] > GameManager.instance.GetGold()) { 
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
+        if (buildCosts[i] > GameManager.instance.GetGold()) {
+            SoundManager.instance.Play("Wrong", 0);
             Debug.LogError("YOU DON'T HAVE ENOUGH GOLD TO BUY THIS TOWER");
             return;
+        }
+
+        switch (i) {
+            case 0:  SoundManager.instance.Play("AT Select", 2); break;
+            case 1: SoundManager.instance.Play("FT Select", 2); break;
+            case 2: SoundManager.instance.Play("IT Select", 2); break;
+            case 3: SoundManager.instance.Play("CT Select", 2); break;
+            default: Debug.LogError("INDEX OUT OF RANGE!"); break;
         }
 
         GameObject towerClone = (GameObject)Instantiate(towerPrefabs[i]);
@@ -58,6 +67,8 @@ public class BuildManager : MonoBehaviour {
         towerChoice = i; 
     }
     void MoveTower() {
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
         selectedTower = null;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -66,10 +77,10 @@ public class BuildManager : MonoBehaviour {
         draggableTower.transform.position = SnapToGrid(hit.point);
         Tower t = draggableTower.GetComponent<Tower>();
 
-        if (hit.point.y > 2.1f && hit.point.y < 2.3f && !t.GetIsColliding()) {
+        if (hit.point.y > 2.1f && hit.point.y < 2.3f) {
             draggableTower.GetComponent<Tower>().Buildable();
 
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) { 
                 GameManager.instance.EarnGold(-buildCosts[towerChoice]);
                 t.Build();
                 placedTowers.Add(draggableTower);
@@ -79,8 +90,10 @@ public class BuildManager : MonoBehaviour {
         else {
             t.Unbuildable();
 
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
+                SoundManager.instance.Play("Wrong", 0);
                 Debug.LogError("YOU CAN'T PLACE THAT TOWER THERE");
+            }
         }
         
         Vector3 SnapToGrid(Vector3 towerPos) {
@@ -88,6 +101,8 @@ public class BuildManager : MonoBehaviour {
         }
     }
     void SelectTower() {
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
         draggableTower = null;
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -95,21 +110,35 @@ public class BuildManager : MonoBehaviour {
 
         if (hit.collider.gameObject.CompareTag("Tower") && Input.GetMouseButtonDown(0)) {
             GameObject tempTow = hit.collider.gameObject;
-
             selectedTower = tempTow;
+
             Tower t = selectedTower.GetComponent<Tower>();
             towerInfoUI.SetActive(true);
-            towerInfo.text = t.name + " (Level " + t.GetLevel() + ")";
+
+            if (t.GetLevel() == t.GetMaxLevel()) towerInfo.text = t.name + " (Max Level)";
+            else towerInfo.text = t.name + " (Level " + t.GetLevel() + ")";
+
+            switch (t.GetTowerType()) {
+                case TowerType.ARROW: SoundManager.instance.Play("AT Select", 2); break;
+                case TowerType.CANNON: SoundManager.instance.Play("CT Select", 2); break;
+                case TowerType.ICE: SoundManager.instance.Play("IT Select", 2); break;
+                case TowerType.FIRE: SoundManager.instance.Play("FT Select", 2); break;
+                default: Debug.LogError("NO TOWER EXISTS LIKE THAT!"); break;
+            }
         }
     }
     public void UpgradeTower(GameObject tower, Stat stat) {
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
         Tower t = tower.GetComponent<Tower>();
 
         if (GameManager.instance.GetGold() < t.GetUpgradeCosts(t.GetLevel() - 1)) {
+            SoundManager.instance.Play("Wrong", 0);
             Debug.LogError("YOU DON'T HAVE ENOUGH GOLD TO UPGRADE THIS TOWER!");
             return;
         }
         if (t.GetIsMaxed()) {
+            SoundManager.instance.Play("Wrong", 0);
             Debug.LogError("THIS TOWER IS ALREADY AT ITS MAXIMUM LEVEL!");
             return;
         }
@@ -117,12 +146,14 @@ public class BuildManager : MonoBehaviour {
         t.Upgrade(stat);
         GameManager.instance.EarnGold(-t.GetUpgradeCosts(t.GetLevel() - 1));
         UIHandler.canPause = true;
-        // Debug.Log(t.name + " HAS BEEN UPGRADED!");
     }
     public void SellTower(GameObject tower) {
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
         Tower t = tower.GetComponent<Tower>();
 
         UIHandler.canPause = true;
+        // SoundManager.instance.PlaySound("Sell", 0);
         GameManager.instance.EarnGold(t.GetTowerValue());
         placedTowers.Remove(tower);
         Destroy(tower);

@@ -70,10 +70,10 @@ MonoBehaviour:
     loop: 0
     volume: 0.8
     source: {fileID: 0}
-  - name: Move
-    clip: {fileID: 8300000, guid: 0bf6bc6dd97d41946a4ae2a893682b34, type: 3}
+  - name: Damage
+    clip: {fileID: 8300000, guid: 3641fa8379d2c3440a53110b9247b6a2, type: 3}
     loop: 0
-    volume: 1
+    volume: 0.8
     source: {fileID: 0}
   - name: Wrong
     clip: {fileID: 8300000, guid: 7d81e0b36a259534e9e27f246b6947cf, type: 3}
@@ -107,7 +107,7 @@ MonoBehaviour:
     volume: 0.8
     source: {fileID: 0}
   - name: Goblin ltb
-    clip: {fileID: 8300000, guid: 6937aefab1459ff41818cc17c4afc09f, type: 3}
+    clip: {fileID: 8300000, guid: f2147727c61a4944f911e97ce25e672f, type: 3}
     loop: 0
     volume: 0.8
     source: {fileID: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
     loop: 0
     volume: 0.8
     source: {fileID: 0}
-  - name: Ravne ltb
+  - name: Raven ltb
     clip: {fileID: 8300000, guid: 254a697d4e3cd6443a950e6f94e847a1, type: 3}
     loop: 0
     volume: 0.8
@@ -127,7 +127,7 @@ MonoBehaviour:
     volume: 0.8
     source: {fileID: 0}
   - name: Hog ltb
-    clip: {fileID: 8300000, guid: 543e91b9d2546ad4b8265f3ff12f68d6, type: 3}
+    clip: {fileID: 8300000, guid: c7c11310551f8d9439d42fe274bd39eb, type: 3}
     loop: 0
     volume: 0.8
     source: {fileID: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
   - name: FT Placed
     clip: {fileID: 8300000, guid: d203ec06b56c9b24d9aebd8d713a1195, type: 3}
     loop: 0
-    volume: 0
+    volume: 0.8
     source: {fileID: 0}
   - name: FT Effect
     clip: {fileID: 8300000, guid: 600ac38662225bc42b3d9eec953bfac1, type: 3}
@@ -200,6 +200,12 @@ MonoBehaviour:
   - name: IT Select
     clip: {fileID: 8300000, guid: ddba93fa177d5cc419da87bde8d47602, type: 3}
     loop: 0
+    volume: 0.8
+    source: {fileID: 0}
+  bgm:
+  - name: Theme
+    clip: {fileID: 8300000, guid: 12abd1908a94969478fe90d4b0c9bc5b, type: 3}
+    loop: 1
     volume: 0.8
     source: {fileID: 0}
   soundSource: {fileID: 3759693519256489539}

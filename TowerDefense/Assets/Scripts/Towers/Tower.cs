@@ -1,8 +1,7 @@
-using System.Transactions;
 using UnityEngine;
 
 public enum TowerState { START, PLACED, SELECTED };
-
+public enum TowerType { ARROW, ICE, CANNON, FIRE };
 public abstract class Tower : MonoBehaviour {
 
     [Header("Setup Fields")]
@@ -27,6 +26,7 @@ public abstract class Tower : MonoBehaviour {
     protected int towerValue = 0; // used when you're planning to sell the tower
     protected int towerIndex = 0; // the different looks for each tower
     protected bool isMaxed, isColliding;
+    protected TowerType type;
 
     // BASE TOWER STATS
     protected const float turnSpeed = 20f;
@@ -45,6 +45,7 @@ public abstract class Tower : MonoBehaviour {
     public bool GetIsMaxed() { return isMaxed; }
     public bool GetIsColliding() { return isColliding; }
     public float GetEffectCountdown() { return effectCountdown; }
+    public TowerType GetTowerType() { return type; }
     public GameObject GetPlane() { return plane; }
 
 
@@ -55,16 +56,8 @@ public abstract class Tower : MonoBehaviour {
         InvokeRepeating("Retarget", 0f, 2f);
     }
     protected virtual void Update()  {
-        testing();
-
         if (target == null) return;
         LockInAtTarget();
-
-        /*
-        if (state == TowerState.PLACED) {
-            plane.SetActive(false);
-            LockInAtTarget();
-        } */
 
         if (attackCountdown <= 0f) {
             if (state != TowerState.START) Attack();
@@ -115,8 +108,15 @@ public abstract class Tower : MonoBehaviour {
         plane.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Selectable");
         gameObject.tag = "Tower";
-    }
 
+        switch (type) {
+            case TowerType.ARROW: SoundManager.instance.Play("AT Placed", 2); break;
+            case TowerType.FIRE: SoundManager.instance.Play("FT Placed", 2); break;
+            case TowerType.ICE: SoundManager.instance.Play("IT Placed", 2); break;
+            case TowerType.CANNON: SoundManager.instance.Play("CT Placed", 2); break;
+            default: Debug.LogError("INDEX OUT OF RANGE!"); break;
+        }
+    }
     public void Selected() {
         if (state == TowerState.START) return;
 
@@ -156,18 +156,9 @@ public abstract class Tower : MonoBehaviour {
         }
 
         switch (stat) {
-            case Stat.DMG:
-                Debug.Log("DAMAGE HAS BEEN INCREASED!");
-                dmg += 5;
-                break;
-            case Stat.RANGE:
-                Debug.Log("RANGE HAS BEEN INCREASED!");
-                range += 0.1f;
-                break;
-            case Stat.DPS:
-                Debug.Log("ATTACK TIME HAS BEEN DECREASED!");
-                attackRate += 0.5f;
-                break;
+            case Stat.DMG: dmg += 5; break;
+            case Stat.RANGE: range += 0.1f; break;
+            case Stat.DPS:attackRate += 0.5f; break;
             default: break;
         }
 
@@ -184,14 +175,4 @@ public abstract class Tower : MonoBehaviour {
     }
     protected virtual void OnMouseEnter() { Selected(); }
     protected virtual void OnMouseExit() { Deselected(); }
-    protected virtual void OnTriggerEnter(Collider other) { if (other.CompareTag("Environment")) isColliding = true; }
-    protected virtual void OnTriggerExit(Collider other) { if (other.CompareTag("Environment")) isColliding = false; }
-
-    protected virtual void testing() {
-        /*
-        if (Input.GetKeyDown(KeyCode.I)) {
-            Debug.Log("Build Level: " + buildLevel);
-            Debug.Log("Tower Level: " + towerLevel);
-        } */
-    }
 }

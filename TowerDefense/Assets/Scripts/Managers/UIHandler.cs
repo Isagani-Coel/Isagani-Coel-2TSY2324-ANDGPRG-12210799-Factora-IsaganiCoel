@@ -30,18 +30,25 @@ public class UIHandler : MonoBehaviour {
         chosenStat = Stat.START;
     }
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Tab)) sidebarPanel.SetActive(!sidebarPanel.activeSelf);
-        
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
+        // HOTKEYS FOR THE MENU
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            SoundManager.instance.Play("Select", 0);
+            sidebarPanel.SetActive(!sidebarPanel.activeSelf);
+        }
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            SoundManager.instance.Play("Select", 0);
             if (!isPaused) Pause();
             else Resume();
         }
+        if (Input.GetKeyDown(KeyCode.Return)) Toggle2xSpeed();
     }
 
     public void SetStat(int i) {
-
-        // idk why you can't use enums for the parameter in the buttons
-        switch (i) { 
+        SoundManager.instance.Play("Select", 0);
+        
+        switch (i) { // idk why you can't use enums for the parameter in the buttons 
             case 0: chosenStat = Stat.DPS; break;
             case 1: chosenStat = Stat.DMG; break;
             case 2: chosenStat = Stat.RANGE; break;
@@ -52,6 +59,7 @@ public class UIHandler : MonoBehaviour {
         confirmPanel.SetActive(true);
     }
     public void Cancel() {
+        SoundManager.instance.Play("Select", 0);
         canPause = true;
         isSelling = false;
         isUpgrading = false;
@@ -61,6 +69,7 @@ public class UIHandler : MonoBehaviour {
         statPanel.SetActive(false);
     }
     public void EnableUpgrade() {
+        SoundManager.instance.Play("Select", 0);
         Tower t = BuildManager.instance.GetSelectedTower().GetComponent<Tower>();
 
         if (GameManager.instance.GetGold() < t.GetUpgradeCosts(t.GetLevel())) {
@@ -75,15 +84,22 @@ public class UIHandler : MonoBehaviour {
         statPanel.SetActive(true);
     }
     public void EnableSell() {
+        SoundManager.instance.Play("Select", 0);
+
         canPause = false;
         isSelling = true;
         upgradePanel.SetActive(false);
         confirmPanel.SetActive(true);
     }
-
     public void ConfirmAction() {
-        if (isSelling) BuildManager.instance.SellTower(BuildManager.instance.GetSelectedTower());
-        if (isUpgrading) BuildManager.instance.UpgradeTower(BuildManager.instance.GetSelectedTower(), chosenStat);
+        if (isSelling) {
+            BuildManager.instance.SellTower(BuildManager.instance.GetSelectedTower());
+            SoundManager.instance.Play("Sell", 0);
+        }
+        if (isUpgrading) {
+            BuildManager.instance.UpgradeTower(BuildManager.instance.GetSelectedTower(), chosenStat);
+            SoundManager.instance.Play("Upgrade", 0);
+        }
 
         confirmPanel.SetActive(false);
         isSelling = false;
@@ -91,23 +107,16 @@ public class UIHandler : MonoBehaviour {
         chosenStat = Stat.START;
     }
 
-    // NOT YET WORKING
-    public void Restart() {
-        Debug.LogError("this feature isn't working properly yet");
-        return;
-
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
-    }
     public void Pause() {
         if (!canPause) return;
-
+        SoundManager.instance.Play("Select", 0);
         isPaused = true;
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
     }
     public void Resume() {
         if (!canPause) return;
-        
+        SoundManager.instance.Play("Select", 0);
         isPaused = false;
         pausePanel.SetActive(false);
 
@@ -117,8 +126,13 @@ public class UIHandler : MonoBehaviour {
         }
         Time.timeScale = 1f;
     }
-    public void Quit() { Application.Quit(); }
+    public void Quit() {
+        SoundManager.instance.Play("Select", 0);
+        Application.Quit();
+    }
     public void Toggle2xSpeed() {
+        SoundManager.instance.Play("Select", 0);
+
         if (!is2xSpeed) {
             Time.timeScale = 2f;
             is2xSpeed = true;

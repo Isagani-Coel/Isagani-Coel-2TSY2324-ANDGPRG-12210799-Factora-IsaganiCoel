@@ -7,6 +7,7 @@ public class Cannon : Tower {
         dmg = 20;
         range = 9f;
         attackRate = 0.8f;
+        type = TowerType.CANNON;
 
         base.Start();
     }
@@ -28,6 +29,7 @@ public class Cannon : Tower {
 
         // THE CANNON CAN ONLY TARGET GROUND ENEMIES
         if (target.GetComponent<Enemy>().GetMonsterType() == MonsterType.AIR) return;
+        SoundManager.instance.Play("CT Attack", 2);
 
         if (tempBullet != null) {
             tempBullet.SetTower(this);
@@ -41,6 +43,4 @@ public class Cannon : Tower {
     protected override void OnDestroy() { base.OnDestroy(); }
     protected override void OnMouseEnter() { base.OnMouseEnter(); }
     protected override void OnMouseExit() { base.OnMouseExit(); }
-    protected override void OnTriggerEnter(Collider other) { base.OnTriggerEnter(other); }
-    protected override void OnTriggerExit(Collider other) { base.OnTriggerExit(other); }
 }

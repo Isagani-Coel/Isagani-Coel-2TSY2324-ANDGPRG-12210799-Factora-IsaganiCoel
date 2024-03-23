@@ -47,10 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 7781488485406685692}
   enemyPrefabs:
-  - {fileID: 3403854652210055399, guid: 654d7f078179d6c489629dedf16a70dd, type: 3}
-  - {fileID: 6313844916411067311, guid: d9f3ff707ebf78948806154df65e42bf, type: 3}
-  - {fileID: 497021957165599486, guid: 51b70ea6898a47942ac20baac281623e, type: 3}
-  - {fileID: 5778097271627335046, guid: 1d5db0dc29e98af418d3574ba42ba996, type: 3}
+  - {fileID: 6077756949870431241, guid: ceab7dbc1e991624792cc4aab97cb7e2, type: 3}
+  - {fileID: 6467762061173244952, guid: d9f3ff707ebf78948806154df65e42bf, type: 3}
+  - {fileID: 7607809182275933286, guid: 51b70ea6898a47942ac20baac281623e, type: 3}
+  - {fileID: 3614846371908510123, guid: 3c1c7a288f04e884fa1651717eb48480, type: 3}
 --- !u!1 &3671446715085324756
 GameObject:
   m_ObjectHideFlags: 0

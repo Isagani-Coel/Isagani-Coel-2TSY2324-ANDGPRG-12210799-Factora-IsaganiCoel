@@ -20,11 +20,11 @@ public class SpawnManager : MonoBehaviour {
     }
 
     public void Spawn(int i) {
-        GameObject e = Instantiate(enemyPrefabs[i], spawnPoint.position, Quaternion.identity);
-        e.GetComponent<Enemy>().SetTarget(GameManager.instance.GetGoal().transform);
-        enemies.Add(e);
+        if (!GameManager.instance.GetIsAlive() || WaveManager.instance.GetState() == SpawnState.FINISHED) return;
+
+        GameObject enemy = Instantiate(enemyPrefabs[i], spawnPoint.position, Quaternion.identity);
+        enemy.GetComponent<Enemy>().SetTarget(GameManager.instance.GetGoal().transform);
+        enemies.Add(enemy);
     }
-    public void Despawn(GameObject clone) {
-        enemies.Remove(clone);
-    }
+    public void Despawn(GameObject enemy) { enemies.Remove(enemy); }
 }

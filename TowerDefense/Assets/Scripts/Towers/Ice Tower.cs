@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class IceTower : Tower {
     protected override void Start() {
         name = "Ice Tower";
@@ -8,12 +6,14 @@ public class IceTower : Tower {
         range = 8f;
         attackRate = 0.9f; 
         effectCountdown = 8f;
+        type = TowerType.ICE;
 
         base.Start();
     }
     protected override void Update() { base.Update(); }
     protected override void Attack() {
         CreateBullet();
+        SoundManager.instance.Play("CT Attack", 2);
 
         if (tempBullet != null) {
             tempBullet.SetTower(this);
@@ -26,6 +26,4 @@ public class IceTower : Tower {
     protected override void OnDestroy() { base.OnDestroy(); }
     protected override void OnMouseEnter() { base.OnMouseEnter(); }
     protected override void OnMouseExit() { base.OnMouseExit(); }
-    protected override void OnTriggerEnter(Collider other) { base.OnTriggerEnter(other); }
-    protected override void OnTriggerExit(Collider other) { base.OnTriggerExit(other); }
 }
